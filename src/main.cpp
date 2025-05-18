@@ -1,5 +1,7 @@
 #include <iostream>
 #include <iomanip>
+//#include <exception>
+//#include <format>
 #include "../include/definitions.h"
 #include "../include/descriptions.h"
 //#define MENU_ICON '*'
@@ -13,6 +15,44 @@ static void mainMenu(char defChar);
 USHORT descPrompt(void (*funcPtr)());
 
 static void closeApp() { PRINT_ENDL(std::endl << "Bye." << std::endl); } // One-line function, because it's small.
+static void getInput(USHORT* opt) // USHORT input getter with checker for non-USHORT input
+{
+	bool stop = false;
+	do
+	{
+		GET(*opt);
+		try
+		{
+			if (std::cin.fail()) throw "Please enter an integer.\nTry again: ";
+			else stop = true;
+		}
+		catch (const char* msg)
+		{
+			PRINT(msg);
+			stop = false;
+			CLEARIGNORECHAR_CIN;
+		}
+	} while (stop == false);
+}
+static void getInput(float* opt) // Overloaded for floats
+{
+	bool stop = false;
+	do
+	{
+		GET(*opt);
+		try
+		{
+			if (std::cin.fail()) throw "Please enter an integer.\nTry again: ";
+			else stop = true;
+		}
+		catch (const char* msg)
+		{
+			PRINT(msg);
+			stop = false;
+			CLEARIGNORECHAR_CIN;
+		}
+	} while (stop == false);
+}
 static USHORT extractPercentage() // 1
 {
 	if (descPrompt(describe1) == 0) return -1;
@@ -20,9 +60,9 @@ static USHORT extractPercentage() // 1
 	float target, percentage;
 	PRINT_ENDL("* PERCENTAGE EXTRACTOR *");
 	PRINT("Enter the target number: ");
-	GET(target);
+	getInput(&target);
 	PRINT("Enter a percentage: ");
-	GET(percentage);
+	getInput(&percentage);
 	//float result = target * (percentage / 100);
 	PRINT_ENDL(percentage << "% of " << target << " is " << target * (percentage / 100) << "." << std::endl);
 	
@@ -36,13 +76,13 @@ static USHORT percentageSubtractor() // 2
 	float target, percentage;
 	PRINT_ENDL("* PERCENTAGE SUBTRACTOR *");
 	PRINT("Enter the target number: ");
-	GET(target);
+	getInput(&target);
 	PRINT("Enter a percentage (1 - 100): ");
-	GET(percentage);
+	getInput(&percentage);
 	while (percentage < 1 || percentage > 100)
 	{
 		PRINT("Invalid value. Only 1 through 100 is allowed." << std::endl << "Try again: ");
-		GET(percentage);
+		getInput(&percentage);
 	}
 	PRINT_ENDL(target << " minus " << percentage << "% is " << target - target * (percentage / 100) << ".");
 
@@ -55,9 +95,9 @@ static USHORT percentageOfTotal() // 3
 	float part, total;
 	PRINT_ENDL("* PERCENTAGE OF TOTAL *");
 	PRINT("Enter the first number (part): ");
-	GET(part);
+	getInput(&part);
 	PRINT("Enter the second number (total): ");
-	GET(total); // 9 -> 90 = 10
+	getInput(&total); // 9 -> 90 = 10
 	//90 100
 	//9  x
 	PRINT_ENDL(part << " represents " << (part * 100) / total << "% of " << total << ".");
@@ -65,7 +105,7 @@ static USHORT percentageOfTotal() // 3
 }
 USHORT descPrompt(void (*funcPtr)()) // DESCRIPTION PROMPT - FUNCTION POINTER
 {
-	USHORT choice;
+	USHORT opt;
 	//bool stop = false;
 	funcPtr();
 	PRINT_ENDL("Do you wish to continue?");
@@ -73,8 +113,8 @@ USHORT descPrompt(void (*funcPtr)()) // DESCRIPTION PROMPT - FUNCTION POINTER
 	{
 		PRINT("1 - Yes" << std::endl << "0 - Back to main menu" << std::endl <<
 			"---> ");
-		GET(choice);
-		switch (choice)
+		getInput(&opt);
+		switch (opt)
 		{
 		case 0: return 0; break;
 		case 1: PRINT(std::endl); return 1; break; //stop = true; break;
@@ -105,7 +145,8 @@ static void mainMenu(char defChar) // Main menu
 		
 		drawBox = true;
 		PRINT("Enter an option from the box above (or '0' to quit the program): ");
-		GET(opt);
+		//GET(opt);
+		getInput(&opt);
 		switch (opt)
 		{
 		case 0: break;
@@ -126,8 +167,15 @@ int main()
 {
 	PRINT_ENDL("");
 	//PRINT_ENDL("*************************************");
+	
+	// NEW FUNC USAGE EXAMPLE
+	/*USHORT opt;
+	getInput(&opt);
+	PRINT_ENDL(std::endl << "after func: " << opt);*/
+
 	PRINT_ENDL("Percentage Sandbox by Henrique Soares" << std::endl);
 	mainMenu(MENU_ICON);
+
 	//PRINT_ENDL(std::endl << "*************************************" << std::endl);
 	return 0;
 }

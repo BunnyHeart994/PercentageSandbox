@@ -17,3 +17,9 @@ void describe3() // PERCENTAGE OF TOTAL
 	PRINT_ENDL(std::endl << "Percentage of total asks the user for two numbers, then shows" << std::endl <<
 	"the percentage that the first number (part) represents of the second (total).");
 }
+void describe4() // REVERSE PERCENTAGE
+{
+	PRINT_ENDL(std::endl << "Reverse percentage asks the user for a percentage and a final amount," << std::endl <<
+		"then shows the number by which having that percentage added to or subtracted from it," << std::endl <<
+		"results in the final amount.");
+}
