@@ -13,12 +13,12 @@ static void mainMenu(char defChar);
 USHORT descPrompt(void (*funcPtr)());
 
 static void closeApp() { PRINT_ENDL(std::endl << "Bye." << std::endl); } // One-line function, because it's small.
-static void extractPercentage() // 1
+static USHORT extractPercentage() // 1
 {
-	if (descPrompt(describe1) == 0) return;
+	if (descPrompt(describe1) == 0) return -1;
 
 	float target, percentage;
-	PRINT_ENDL("*PERCENTAGE EXTRACTOR*");
+	PRINT_ENDL("* PERCENTAGE EXTRACTOR *");
 	PRINT("Enter the target number: ");
 	GET(target);
 	PRINT("Enter a percentage: ");
@@ -26,14 +26,15 @@ static void extractPercentage() // 1
 	//float result = target * (percentage / 100);
 	PRINT_ENDL(percentage << "% of " << target << " is " << target * (percentage / 100) << "." << std::endl);
 	
+	return target * (percentage / 100);
 	//mainMenu(MENU_ICON); // PROBLEM -> DON'T DO THIS
 }
-static void percentageSubtractor() // 2
+static USHORT percentageSubtractor() // 2
 {
-	if (descPrompt(describe2) == 0) return;
+	if (descPrompt(describe2) == 0) return -1;
 
 	float target, percentage;
-	PRINT_ENDL("*PERCENTAGE SUBTRACTOR*");
+	PRINT_ENDL("* PERCENTAGE SUBTRACTOR *");
 	PRINT("Enter the target number: ");
 	GET(target);
 	PRINT("Enter a percentage (1 - 100): ");
@@ -44,6 +45,23 @@ static void percentageSubtractor() // 2
 		GET(percentage);
 	}
 	PRINT_ENDL(target << " minus " << percentage << "% is " << target - target * (percentage / 100) << ".");
+
+	return target - target * (percentage / 100);
+}
+static USHORT percentageOfTotal() // 3
+{
+	if (descPrompt(describe3) == 0) return -1;
+
+	float part, total;
+	PRINT_ENDL("* PERCENTAGE OF TOTAL *");
+	PRINT("Enter the first number (part): ");
+	GET(part);
+	PRINT("Enter the second number (total): ");
+	GET(total); // 9 -> 90 = 10
+	//90 100
+	//9  x
+	PRINT_ENDL(part << " represents " << (part * 100) / total << "% of " << total << ".");
+	return (part * 100) / total;
 }
 USHORT descPrompt(void (*funcPtr)()) // DESCRIPTION PROMPT - FUNCTION POINTER
 {
@@ -59,7 +77,7 @@ USHORT descPrompt(void (*funcPtr)()) // DESCRIPTION PROMPT - FUNCTION POINTER
 		switch (choice)
 		{
 		case 0: return 0; break;
-		case 1: return 1; break; //stop = true; break;
+		case 1: PRINT(std::endl); return 1; break; //stop = true; break;
 		default: PRINT_ENDL("Invalid option. Try again."); break;
 		}
 		//break;
@@ -80,13 +98,13 @@ static void mainMenu(char defChar) // Main menu
 
 			PRINT(std::left << std::setw(COL_WIDTH_MENU / 3) << "| 1 - Percentage extractor" << '|');
 			PRINT(std::left << std::setw(COL_WIDTH_MENU / 3) << "2 - Percentage subtractor" << '|');
-			PRINT_ENDL(std::right << std::setw((COL_WIDTH_MENU / 3) + COL_WIDTH_MENU % 3 - 2) << "3 - Incognito |");
+			PRINT_ENDL(std::right << std::setw((COL_WIDTH_MENU / 3) + COL_WIDTH_MENU % 3 - 2) << "3 - Percentage of total|");
 
 			PRINT_ENDL(std::setfill(defChar) << std::setw(COL_WIDTH_MENU) << ""); // Draw lower boundary.
 		}
 		
 		drawBox = true;
-		PRINT("Enter an option from the box above: ");
+		PRINT("Enter an option from the box above (or '0' to quit the program): ");
 		GET(opt);
 		switch (opt)
 		{
@@ -95,6 +113,8 @@ static void mainMenu(char defChar) // Main menu
 			extractPercentage(); break;
 		case 2:
 			percentageSubtractor(); break;
+		case 3:
+			percentageOfTotal(); break;
 		default:
 			PRINT("Invalid option. Try again." << std::endl); drawBox = false; break;
 		}

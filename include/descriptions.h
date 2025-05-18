@@ -12,3 +12,8 @@ void describe2() // PERCENTAGE SUBTRACTOR
 	PRINT_ENDL(std::endl << "Percentage subtractor asks the user for a number than a percentage," << std::endl <<
 	"then shows the remainder of that percentage subtracted from the number.");
 }
+void describe3() // PERCENTAGE OF TOTAL
+{
+	PRINT_ENDL(std::endl << "Percentage of total asks the user for two numbers, then shows" << std::endl <<
+	"the percentage that the first number (part) represents of the second (total).");
+}
