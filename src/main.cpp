@@ -137,7 +137,7 @@ static USHORT reversePercentage() // 4
 	getInput(&total);
 	PRINT_ENDL("");
 
-	// EQUATION CODE
+	// OLD ADDITION EQUATION (RESULT ALSO WORKS) | t = 300 | p = 50 | x = 1 | y (final) = 200
 	// t = x + x * p/100
 	// 300 = x + x * 0.5
 	// 300 = x(1 + 0.5)
@@ -145,13 +145,29 @@ static USHORT reversePercentage() // 4
 	// x * 1.5 = 300
 	// x = 300 / 1.5
 	// final = total / x + x * (percentage/100)
+	// FINAL EQUATION: final = total / x + x * (percentage/100)
+	
+	// NEW CURRENT EQUATION | t = 500 | p = 100 | y = 250 |
+	// NEW CURRENT EQUATION | t = 15 | p = 50 | y = 10 |
+	// y + y * (p/100) = t
+	// (y * 1) + (y * (p/100)) = t
+	// y(1 + p/100) = t ---> RAW
+	// y * 2 = t
+	// y = t / 2
+	// y = 250
+	// 
+	// y(1 + 0.5) = t
+	// y * 1.5 = t
+	// y = t / 1.5 ---> EUREKA!
+	// FINAL EQUATION (READY FOR CODE): y = t / (1 + (p/100))
 
-	float x = 1;
+	//float x = 1;
 
 	// Old PRINT (without std::format) // HAD PROBLEM WITH "std::fixed << std::setprecision()"
 	/*PRINT_ENDL("To get to " << total << " by ADDING " << percentage << "% of a number to itself, this number must be " <<
 		std::fixed << std::setprecision(2) << total / (x + x * (percentage / 100)) << "." << std::endl);*/
-	float currExpResult = total / (x + x * (percentage / 100));
+	//float currExpResult = (total / (percentage/100)) / 2;
+	float currExpResult = total / (1 + (percentage / 100));
 	bool expNotValid = (std::isinf(currExpResult) || std::isnan(currExpResult));
 	/*bool expNotValid = (std::isinf(total / (x + x * (percentage / 100))) ||
 		std::isnan(total / (x + x * (percentage / 100))));*/
@@ -171,40 +187,47 @@ static USHORT reversePercentage() // 4
 	else PRINT(std::format("To get to {0} by ADDING {1}% of a number to itself, this number must be {2:.2f}.\n",
 		total, percentage, currExpResult));
 
-	// Test equation
-	/*final = total - (total - (total * (percentage / 100)));
-	PRINT_ENDL("NEW: " << final);*/
-
-	// SECOND EQUATION CODE | t = 300 | p = 50 | x = 1 |
+	// OLD SUBTRACTION EQUATION | t = 300 | p = 50 | x = 1 |
 	// t = x - x * p/100
 	// 300 = x - x * 0.5 | 300 = 600 - 600 * 0.5
-	// 300 = x(1 - 0.5)
+	// 300 = x(1 - 0.5) | 
 	// x * 0.5 = 300
 	// x = 300 / 0.5
 	// final = total / x - x * (percentage/100)
 
-	// Old PRINT (without std::format) // HAD PROBLEM WITH "std::fixed << std::setprecision()"
+	// Old PRINTS (without std::format) -> HAD PROBLEM WITH "std::fixed << std::setprecision()"
 	/*PRINT_ENDL("To get to " << total << " by SUBTRACTING " << percentage << "% of a number to itself, this number must be " <<
 		std::fixed << std::setprecision(2) << total / (x - x * (percentage / 100)) << "." << std::endl);*/
 	
 	/*PRINT(std::format(
 		"And to get to {0} by SUBTRACTING {1}% of a number from itself, this number must be {2:.2f}.\n\n",
 		total, percentage, (total / (x - x * (percentage / 100)))));*/
-
-	currExpResult = total / (x - x * (percentage / 100));
+	
+	// CURRENT EQUATION (SUBTRACTION) | t = 500 | p = 100 | y = 250 |
+	// CURRENT EQUATION (SUBTRACTION) | t = 15 | p = 50 | y = 30 |
+	// 30 - 30 * 50% = 15
+	// y - y * 50/100 = 15
+	// y * 1 - y * 50/100 = 15
+	// y(1 - 0.5) = 15
+	// y * 0.5 = 15
+	// y = 15 / 0.5 ---> EUREKA!
+	// FINAL EQUATION (READY FOR CODE): y = t / (1 - (p/100))
+	
+	currExpResult = total / (1 - (percentage / 100));
 	expNotValid = (std::isinf(currExpResult) || std::isnan(currExpResult));
-	/*PRINT((expNotValid) ? // Problematic ternary
+	/*PRINT((expNotValid) ? | Problematic ternary
 		std::format("To get to {0} by ADDING {1}% of a number to itself, this number must be {2}.\n",
 			total, percentage, "RESULT IS NOT A NUMBER, OR INFINITY") :
-		std::format("To get to {0} by ADDING {1}% of a number to itself, this number must be {2:.2f}.\n",
+		std::format("To get to {0} by SUBTRACTING {1}% of a number from itself, this number must be {2:.2f}.\n",
 			total, percentage, currExpResult));*/
 	if (expNotValid)
-		PRINT(std::format("To get to {0} by ADDING {1}% of a number to itself, this number must be {2}.\n",
+		PRINT(std::format("And to get to {0} by SUBTRACTING {1}% of a number from itself, this number must be {2}.\n",
 			total, percentage, "(RESULT IS NOT A NUMBER, OR INFINITY)"));
-	else PRINT(std::format("To get to {0} by ADDING {1}% of a number to itself, this number must be {2:.2f}.\n",
+	else PRINT(std::format("And to get to {0} by SUBTRACTING {1}% of a number from itself, this number must be {2:.2f}.\n",
 			total, percentage, currExpResult));
 
-	PRINT_ENDL("NOTE: Every one of this program's functions return a value (for certain purposes). As only one value " <<
+	// SLEEPER CODE - TO BE ACTIVATED IN FUTURE VERSIONS
+	/*PRINT_ENDL(std::endl << "NOTE: Every one of this program's functions return a value (for certain future purposes). As only one value " <<
 		std::endl << "can be returned from this one, choose wether it should return its operation with addition or subtraction." << std::endl);
 	
 	USHORT opt;
@@ -221,12 +244,12 @@ static USHORT reversePercentage() // 4
 	if (opt == 0) PRINT_ENDL("ADDITION RETURNED");
 	else PRINT_ENDL("SUBTRACTION RETURNED");
 
-	return (opt == 0) ? total / (x + x * (percentage / 100)) : total / (x - x * (percentage / 100));
+	return (opt == 0) ? total / (1 + (percentage / 100)) : total / (1 - (percentage / 100));*/
+	return 0;
 }
 USHORT descPrompt(void (*funcPtr)()) // DESCRIPTION PROMPT - FUNCTION POINTER
 {
 	USHORT opt;
-	//bool stop = false;
 	funcPtr();
 	PRINT_ENDL("Do you wish to continue?");
 	while (true)
@@ -237,10 +260,9 @@ USHORT descPrompt(void (*funcPtr)()) // DESCRIPTION PROMPT - FUNCTION POINTER
 		switch (opt)
 		{
 		case 0: return 0; break;
-		case 1: PRINT(std::endl); return 1; break; //stop = true; break;
+		case 1: PRINT(std::endl); return 1; break;
 		default: PRINT_ENDL("Invalid option. Try again."); break;
 		}
-		//break;
 	}
 }
 static void mainMenu(char defChar) // Main menu
@@ -261,8 +283,8 @@ static void mainMenu(char defChar) // Main menu
 			PRINT_ENDL(std::right << std::setw((COL_WIDTH_MENU / 3) + COL_WIDTH_MENU % 3 - 2) << "3 - Percentage of total |");
 
 			PRINT(std::left << std::setw(COL_WIDTH_MENU / 3) << "| 4 - Reverse percentage" << '|');
-			PRINT(std::left << std::setw(COL_WIDTH_MENU / 3) << "Coming in the future" << '|');
-			PRINT_ENDL(std::right << std::setw((COL_WIDTH_MENU / 3) + COL_WIDTH_MENU % 3 - 2) << "Coming in the future |");
+			PRINT(std::left << std::setw(COL_WIDTH_MENU / 3) << " Coming in the future" << '|');
+			PRINT_ENDL(std::right << std::setw((COL_WIDTH_MENU / 3) + COL_WIDTH_MENU % 3 - 2) << " Coming in the future |");
 
 			/*PRINT(std::right << std::setw(COL_WIDTH_MENU / 3 + 1) << '|'); // TEMPLATE FOR WHEN BOXES AREN'T FILLED
 			PRINT_ENDL(std::right << std::setw((COL_WIDTH_MENU / 3) + COL_WIDTH_MENU % 3 - 2) << '|');*/
@@ -295,16 +317,14 @@ static void mainMenu(char defChar) // Main menu
 int main()
 {
 	PRINT_ENDL("");
-	//PRINT_ENDL("*************************************");
-	
-	// NEW FUNC USAGE EXAMPLE
+
+	// POINTER-FUNC USAGE EXAMPLE
 	/*USHORT opt;
 	getInput(&opt);
 	PRINT_ENDL(std::endl << "after func: " << opt);*/
 
-	PRINT_ENDL("Percentage Sandbox by Henrique Soares" << std::endl);
+	PRINT_ENDL("Percentage Sandbox v1.0 by Henrique Soares" << std::endl);
 	mainMenu(MENU_ICON);
 
-	//PRINT_ENDL(std::endl << "*************************************" << std::endl);
 	return 0;
 }
