@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "definitions.h"
+#include "macros.h"
 
 void describe1() // PERCENTAGE EXTRACTOR
 {
