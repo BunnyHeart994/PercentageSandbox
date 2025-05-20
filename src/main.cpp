@@ -68,7 +68,7 @@ static USHORT extractPercentage() // 1
 	bool expNotValid = (std::isinf(result) || std::isnan(result));
 	if (expNotValid)
 		PRINT_ENDL("THE RESULT IS EITHER NOT A NUMBER, OR INFINITY");
-	else PRINT_ENDL(percentage << "% of " << target << " is " << result << "." << std::endl);
+	else PRINT_ENDL(percentage << "% of " << target << " is " << result << ".");
 	
 	return result; //target * (percentage / 100);
 
@@ -203,7 +203,6 @@ static USHORT reversePercentage() // 4
 		"And to get to {0} by SUBTRACTING {1}% of a number from itself, this number must be {2:.2f}.\n\n",
 		total, percentage, (total / (x - x * (percentage / 100)))));*/
 	
-	// CURRENT EQUATION (SUBTRACTION) | t = 500 | p = 100 | y = 250 |
 	// CURRENT EQUATION (SUBTRACTION) | t = 15 | p = 50 | y = 30 |
 	// 30 - 30 * 50% = 15
 	// y - y * 50/100 = 15
@@ -251,7 +250,7 @@ USHORT descPrompt(void (*funcPtr)()) // DESCRIPTION PROMPT - FUNCTION POINTER
 {
 	USHORT opt;
 	funcPtr();
-	PRINT_ENDL("Do you wish to continue?");
+	PRINT_ENDL(std::endl << "Do you wish to continue?");
 	while (true)
 	{
 		PRINT("1 - Yes" << std::endl << "0 - Back to main menu" << std::endl <<
@@ -267,6 +266,7 @@ USHORT descPrompt(void (*funcPtr)()) // DESCRIPTION PROMPT - FUNCTION POINTER
 }
 static void mainMenu(char defChar) // Main menu
 {
+	PRINT_ENDL("");
 	USHORT opt;
 	bool drawBox = true;
 	do
