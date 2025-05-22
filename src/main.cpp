@@ -20,7 +20,7 @@ static void getNumInput(float* num) // float input getter with checker for non-f
 	{
 		GET(*num);
 		char nextChar = std::cin.peek();
-		PRINT_ENDL("DEBUG: c = " << nextChar);
+		//PRINT_ENDL("DEBUG: c = " << nextChar);
 		if (std::cin.fail() || (nextChar != EOF && nextChar != '\n'))
 		{
 			CLEAR_CIN;
@@ -36,7 +36,7 @@ static void getNumInput(USHORT* num) // Overloaded for USHORT
 	{
 		GET(*num);
 		char nextChar = std::cin.peek();
-		PRINT_ENDL("DEBUG: c = " << nextChar);
+		//PRINT_ENDL("DEBUG: c = " << nextChar);
 		if (std::cin.fail() || (nextChar != EOF && nextChar != '\n'))
 		{
 			CLEAR_CIN;
