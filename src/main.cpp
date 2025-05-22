@@ -1,10 +1,8 @@
 #include <iostream>
 #include <iomanip>
-//#include <exception>
 #include <format>
 #include <cmath>
 #include "../include/macros.h"
-//#include "../include/descriptions.h"
 //#define MENU_ICON '*'
 
 // CONSTANTS
