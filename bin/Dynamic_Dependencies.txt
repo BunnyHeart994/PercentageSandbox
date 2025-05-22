@@ -1,0 +1,9 @@
+D:\Projects\C++\PercentageSandbox\bin\PercentageSandbox_Dynamic.exe
+0x00000000e3850000  0x1f8000  C:\Windows\SYSTEM32\ntdll.dll
+0x00000000e2d60000  0xc2000   C:\Windows\System32\KERNEL32.DLL
+0x00000000e0f20000  0x2f6000  C:\Windows\System32\KERNELBASE.dll
+0x00000000de120000  0x94000   C:\Windows\SYSTEM32\apphelp.dll
+0x00000000e1750000  0x100000  C:\Windows\System32\ucrtbase.dll
+0x000000009d9e0000  0xd2000   D:\Projects\C++\PercentageSandbox\bin\libgcc_s_seh-1.dll
+0x000000009c5e0000  0x249000  D:\Projects\C++\PercentageSandbox\bin\libstdc++-6.dll
+0x00000000c15d0000  0x1e000   D:\MinGW64\mingw64\bin\libwinpthread-1.dll

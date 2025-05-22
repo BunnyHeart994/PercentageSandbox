@@ -4,7 +4,7 @@
 #include <format>
 #include <cmath>
 #include "../include/macros.h"
-#include "../include/descriptions.h"
+//#include "../include/descriptions.h"
 //#define MENU_ICON '*'
 
 // CONSTANTS
@@ -16,6 +16,71 @@ static void mainMenu(char defChar);
 USHORT descPrompt(void (*funcPtr)());
 
 static void closeApp() { PRINT_ENDL(std::endl << "Bye." << std::endl); } // One-line function, because it's small.
+static void getNumInput(float* num) // float input getter with checker for non-float input // CURRENT
+{
+	do
+	{
+		GET(*num);
+		char nextChar = std::cin.peek();
+		PRINT_ENDL("DEBUG: c = " << nextChar);
+		if (std::cin.fail() || (nextChar != EOF && nextChar != '\n'))
+		{
+			CLEAR_CIN;
+			IGNORE_MAXCHARAMOUNT;
+			PRINT("Only numbers are accepted." << std::endl << "Try again : ");
+		}
+		else break;
+	} while (true);
+}
+static void getNumInput(USHORT* num) // Overloaded for USHORT
+{
+	do
+	{
+		GET(*num);
+		char nextChar = std::cin.peek();
+		PRINT_ENDL("DEBUG: c = " << nextChar);
+		if (std::cin.fail() || (nextChar != EOF && nextChar != '\n'))
+		{
+			CLEAR_CIN;
+			IGNORE_MAXCHARAMOUNT;
+			PRINT("Only numbers are accepted." << std::endl << "Try again : ");
+		}
+		else break;
+	} while (true);
+}
+// FUTURE TEST
+/*static void getSingleDigitNum(USHORT* num, USHORT digitLimit) // Overloaded for USHORT
+{
+	GET(*num);
+	char nextChar = std::cin.peek();
+	PRINT_ENDL("DEBUG: nextChar = " << nextChar);
+	if (std::cin.fail() || (nextChar != EOF && nextChar != '\n'))
+	{
+		CLEAR_CIN;
+		IGNORE_MAXCHARAMOUNT;
+		PRINT("Only numbers are accepted." << std::endl << "Try again : ");
+	}
+}*/
+// ORIGINALS
+/*static void getInput(float* opt) // Overloaded for floats
+{
+	bool stop = false;
+	do
+	{
+		GET(*opt);
+		try
+		{
+			if (std::cin.fail()) throw "Please enter an integer.\nTry again: ";
+			else stop = true;
+		}
+		catch (const char* msg)
+		{
+			PRINT(msg);
+			stop = false;
+			CLEARIGNORECHAR_CIN;
+		}
+	} while (stop == false);
+}
 static void getInput(USHORT* opt) // USHORT input getter with checker for non-USHORT input
 {
 	bool stop = false;
@@ -34,26 +99,39 @@ static void getInput(USHORT* opt) // USHORT input getter with checker for non-US
 			CLEARIGNORECHAR_CIN;
 		}
 	} while (stop == false);
-}
-static void getInput(float* opt) // Overloaded for floats
+}*/
+// DESCRIPTIONS
+void describe1() // PERCENTAGE EXTRACTOR
 {
-	bool stop = false;
-	do
-	{
-		GET(*opt);
-		try
-		{
-			if (std::cin.fail()) throw "Please enter an integer.\nTry again: ";
-			else stop = true;
-		}
-		catch (const char* msg)
-		{
-			PRINT(msg);
-			stop = false;
-			CLEARIGNORECHAR_CIN;
-		}
-	} while (stop == false);
+	PRINT_ENDL(std::endl << "Percentage extractor asks the user for a number then a percentage," << std::endl <<
+		"then extracts that percentage from the number and shows the result of it." << std::endl <<
+		"EXAMPLE: If user enter 100 as the number and 20 as the percentage, the program will return 20," << std::endl <<
+		"because 20% of 100 is 20.");
 }
+void describe2() // PERCENTAGE SUBTRACTOR
+{
+	PRINT_ENDL(std::endl << "Percentage subtractor asks the user for a number than a percentage," << std::endl <<
+		"then shows the remainder of that percentage subtracted from the number." << std::endl <<
+		"EXAMPLE: If user enters 100 as the number and 60 as the percentage, the program returns 40," << std::endl <<
+		"because 100 minus 60% (of 100) results in 40.");
+}
+void describe3() // PERCENTAGE OF TOTAL
+{
+	PRINT_ENDL(std::endl << "Percentage of total asks the user for two numbers, then shows" << std::endl <<
+		"the percentage that the first number (part) represents of the second (total)." << std::endl <<
+		"EXAMPLE: If user enters 100 as the first number and 200 as the second, the program returns 50%," << std::endl <<
+		"because 100 represents 50% (half) of 200.");
+}
+void describe4() // REVERSE PERCENTAGE
+{
+	PRINT_ENDL(std::endl << "Reverse percentage asks the user for a percentage and a total," << std::endl <<
+		"then shows the number (the unknown) that by having that percentage (relative to the unknown number)" << std::endl <<
+		"added to or subtracted from it, results in the total." << std::endl <<
+		"EXAMPLE: If user enters 50 as the percentage and 15 as the total, the addition and subtraction equations" << std::endl <<
+		"will respectively return 10 and 30 as the unknowns, since 10 + 50% of 10 results in 15," << std::endl <<
+		"and 30 - 50% of 30 results in 15.");
+}
+// DESCRIPTIONS END
 static USHORT extractPercentage() // 1
 {
 	if (descPrompt(describe1) == 0) return -1;
@@ -61,9 +139,9 @@ static USHORT extractPercentage() // 1
 	float target, percentage;
 	PRINT_ENDL("* PERCENTAGE EXTRACTOR *");
 	PRINT("Enter the target number: ");
-	getInput(&target);
+	getNumInput(&target);
 	PRINT("Enter a percentage: ");
-	getInput(&percentage);
+	getNumInput(&percentage);
 	float result = target * (percentage / 100);
 	bool expNotValid = (std::isinf(result) || std::isnan(result));
 	if (expNotValid)
@@ -81,13 +159,13 @@ static USHORT percentageSubtractor() // 2
 	float target, percentage;
 	PRINT_ENDL("* PERCENTAGE SUBTRACTOR *");
 	PRINT("Enter the target number: ");
-	getInput(&target);
+	getNumInput(&target);
 	PRINT("Enter a percentage (1 - 100): ");
-	getInput(&percentage);
+	getNumInput(&percentage);
 	while (percentage < 1 || percentage > 100)
 	{
 		PRINT("Invalid value. Only 1 through 100 is allowed." << std::endl << "Try again: ");
-		getInput(&percentage);
+		getNumInput(&percentage);
 	}
 	float result = target - target * (percentage / 100);
 	bool expNotValid = (std::isinf(result) || std::isnan(result));
@@ -104,9 +182,9 @@ static USHORT percentageOfTotal() // 3 // 1
 	float part, total;
 	PRINT_ENDL("* PERCENTAGE OF TOTAL *");
 	PRINT("Enter the first number (part): ");
-	getInput(&part);
+	getNumInput(&part);
 	PRINT("Enter the second number (total): ");
-	getInput(&total); // 9 -> 90 = 10
+	getNumInput(&total); // 9 -> 90 = 10
 	//90 100
 	//9  x
 	float result = (part * 100) / total;
@@ -132,9 +210,11 @@ static USHORT reversePercentage() // 4
 	float percentage, total;
 	PRINT_ENDL("* REVERSE PERCENTAGE *");
 	PRINT("Enter the percentage: ");
-	getInput(&percentage);
+	getNumInput(&percentage);
+	//percentage = getUShort();
 	PRINT("Enter the desired total: ");
-	getInput(&total);
+	getNumInput(&total);
+	//total = getUShort();
 	PRINT_ENDL("");
 
 	// OLD ADDITION EQUATION (RESULT ALSO WORKS) | t = 300 | p = 50 | x = 1 | y (final) = 200
@@ -163,9 +243,6 @@ static USHORT reversePercentage() // 4
 
 	//float x = 1;
 
-	// Old PRINT (without std::format) // HAD PROBLEM WITH "std::fixed << std::setprecision()"
-	/*PRINT_ENDL("To get to " << total << " by ADDING " << percentage << "% of a number to itself, this number must be " <<
-		std::fixed << std::setprecision(2) << total / (x + x * (percentage / 100)) << "." << std::endl);*/
 	//float currExpResult = (total / (percentage/100)) / 2;
 	float currExpResult = total / (1 + (percentage / 100));
 	bool expNotValid = (std::isinf(currExpResult) || std::isnan(currExpResult));
@@ -196,8 +273,6 @@ static USHORT reversePercentage() // 4
 	// final = total / x - x * (percentage/100)
 
 	// Old PRINTS (without std::format) -> HAD PROBLEM WITH "std::fixed << std::setprecision()"
-	/*PRINT_ENDL("To get to " << total << " by SUBTRACTING " << percentage << "% of a number to itself, this number must be " <<
-		std::fixed << std::setprecision(2) << total / (x - x * (percentage / 100)) << "." << std::endl);*/
 	
 	/*PRINT(std::format(
 		"And to get to {0} by SUBTRACTING {1}% of a number from itself, this number must be {2:.2f}.\n\n",
@@ -255,7 +330,7 @@ USHORT descPrompt(void (*funcPtr)()) // DESCRIPTION PROMPT - FUNCTION POINTER
 	{
 		PRINT("1 - Yes" << std::endl << "0 - Back to main menu" << std::endl <<
 			"---> ");
-		getInput(&opt);
+		getNumInput(&opt);
 		switch (opt)
 		{
 		case 0: return 0; break;
@@ -286,16 +361,17 @@ static void mainMenu(char defChar) // Main menu
 			PRINT(std::left << std::setw(COL_WIDTH_MENU / 3) << " Coming in the future" << '|');
 			PRINT_ENDL(std::right << std::setw((COL_WIDTH_MENU / 3) + COL_WIDTH_MENU % 3 - 2) << " Coming in the future |");
 
-			/*PRINT(std::right << std::setw(COL_WIDTH_MENU / 3 + 1) << '|'); // TEMPLATE FOR WHEN BOXES AREN'T FILLED
+			// TEMPLATE FOR WHEN BOXES AREN'T FILLED
+			/*PRINT(std::right << std::setw(COL_WIDTH_MENU / 3 + 1) << '|');
 			PRINT_ENDL(std::right << std::setw((COL_WIDTH_MENU / 3) + COL_WIDTH_MENU % 3 - 2) << '|');*/
 
 			PRINT_ENDL(std::setfill(defChar) << std::setw(COL_WIDTH_MENU) << ""); // Draw lower boundary.
 		}
 		
 		drawBox = true;
-		PRINT("Enter an option from the box above (or '0' to quit the program): ");
-		//GET(opt);
-		getInput(&opt);
+		PRINT("Enter an option from the box above or '0' to quit the program: ");
+		//getSingleDigitNum(&opt);
+		getNumInput(&opt);
 		switch (opt)
 		{
 		case 0: break;
@@ -317,12 +393,6 @@ static void mainMenu(char defChar) // Main menu
 int main()
 {
 	PRINT_ENDL("");
-
-	// POINTER-FUNC USAGE EXAMPLE
-	/*USHORT opt;
-	getInput(&opt);
-	PRINT_ENDL(std::endl << "after func: " << opt);*/
-
 	PRINT_ENDL("Percentage Sandbox v1.0 by Henrique Soares" << std::endl);
 	mainMenu(MENU_ICON);
 
