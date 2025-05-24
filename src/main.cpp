@@ -3,6 +3,7 @@
 #include <format>
 #include <cmath>
 #include "../include/macros.h"
+#include "..\include\libraries.h"
 //#define MENU_ICON '*'
 
 // CONSTANTS
@@ -346,24 +347,26 @@ static void mainMenu(char defChar) // Main menu
 	{
 		if (drawBox)
 		{
-			PRINT(std::setfill(' '));
-			PRINT_ENDL(std::setw(COL_WIDTH_MENU / 3) << "" << std::left << "* MAIN MENU *");
-			PRINT_ENDL(std::setfill(defChar) << std::setw(COL_WIDTH_MENU) << ""); // Draw upper boundary.
-			PRINT(std::setfill(' '));
+			PRINT_ENDL(strReturn(COL_WIDTH_MENU, MENU_ICON, MENU_ICON, "|", 3, "MAIN MENU", {"1 - Percentage extractor",
+				"2 - Percentage subtractor", "3 - Percentage of total", "4 - Reverse percentage"}));
+			//PRINT(std::setfill(' '));
+			//PRINT_ENDL(std::setw(COL_WIDTH_MENU / 3) << "" << std::left << "* MAIN MENU *");
+			//PRINT_ENDL(std::setfill(defChar) << std::setw(COL_WIDTH_MENU) << ""); // Draw upper boundary.
+			//PRINT(std::setfill(' '));
 
-			PRINT(std::left << std::setw(COL_WIDTH_MENU / 3) << "| 1 - Percentage extractor" << '|');
-			PRINT(std::left << std::setw(COL_WIDTH_MENU / 3) << "2 - Percentage subtractor" << '|');
-			PRINT_ENDL(std::right << std::setw((COL_WIDTH_MENU / 3) + COL_WIDTH_MENU % 3 - 2) << "3 - Percentage of total |");
+			//PRINT(std::left << std::setw(COL_WIDTH_MENU / 3) << "| 1 - Percentage extractor" << '|');
+			//PRINT(std::left << std::setw(COL_WIDTH_MENU / 3) << "2 - Percentage subtractor" << '|');
+			//PRINT_ENDL(std::right << std::setw((COL_WIDTH_MENU / 3) + COL_WIDTH_MENU % 3 - 2) << "3 - Percentage of total |");
 
-			PRINT(std::left << std::setw(COL_WIDTH_MENU / 3) << "| 4 - Reverse percentage" << '|');
-			PRINT(std::left << std::setw(COL_WIDTH_MENU / 3) << " Coming in the future" << '|');
-			PRINT_ENDL(std::right << std::setw((COL_WIDTH_MENU / 3) + COL_WIDTH_MENU % 3 - 2) << " Coming in the future |");
+			//PRINT(std::left << std::setw(COL_WIDTH_MENU / 3) << "| 4 - Reverse percentage" << '|');
+			//PRINT(std::left << std::setw(COL_WIDTH_MENU / 3) << " Coming in the future" << '|');
+			//PRINT_ENDL(std::right << std::setw((COL_WIDTH_MENU / 3) + COL_WIDTH_MENU % 3 - 2) << " Coming in the future |");
 
-			// TEMPLATE FOR WHEN BOXES AREN'T FILLED
-			/*PRINT(std::right << std::setw(COL_WIDTH_MENU / 3 + 1) << '|');
-			PRINT_ENDL(std::right << std::setw((COL_WIDTH_MENU / 3) + COL_WIDTH_MENU % 3 - 2) << '|');*/
+			//// TEMPLATE FOR WHEN BOXES AREN'T FILLED
+			///*PRINT(std::right << std::setw(COL_WIDTH_MENU / 3 + 1) << '|');
+			//PRINT_ENDL(std::right << std::setw((COL_WIDTH_MENU / 3) + COL_WIDTH_MENU % 3 - 2) << '|');*/
 
-			PRINT_ENDL(std::setfill(defChar) << std::setw(COL_WIDTH_MENU) << ""); // Draw lower boundary.
+			//PRINT_ENDL(std::setfill(defChar) << std::setw(COL_WIDTH_MENU) << ""); // Draw lower boundary.
 		}
 		
 		drawBox = true;
