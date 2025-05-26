@@ -3,7 +3,7 @@
 #include <format>
 #include <cmath>
 #include "../include/macros.h"
-#include "..\include\libraries.h"
+#include "../include/libraries.h"
 //#define MENU_ICON '*'
 
 // CONSTANTS
