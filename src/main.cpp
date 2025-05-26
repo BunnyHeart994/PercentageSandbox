@@ -145,7 +145,8 @@ static USHORT extractPercentage() // 1
 	bool expNotValid = (std::isinf(result) || std::isnan(result));
 	if (expNotValid)
 		PRINT_ENDL("THE RESULT IS EITHER NOT A NUMBER, OR INFINITY");
-	else PRINT_ENDL(percentage << "% of " << target << " is " << result << ".");
+	//else PRINT_ENDL(percentage << "% of " << target << " is " << result << ".");
+	else PRINT(std::format("{0}% of {1} is {2:.2f}.\n", percentage, target, result));
 	
 	return result; //target * (percentage / 100);
 
@@ -170,7 +171,8 @@ static USHORT percentageSubtractor() // 2
 	bool expNotValid = (std::isinf(result) || std::isnan(result));
 	if (expNotValid)
 		PRINT_ENDL("THE RESULT IS EITHER NOT A NUMBER, OR INFINITY");
-	else PRINT_ENDL(target << " minus " << percentage << "% is " << result << ".");
+	//else PRINT_ENDL(target << " minus " << percentage << "% is " << result << ".");
+	else PRINT(std::format("{0} minus {1}% is {2:.2f}.\n", target, percentage, result));
 
 	return result; //target - target * (percentage / 100);
 }
@@ -190,7 +192,7 @@ static USHORT percentageOfTotal() // 3 // 1
 	bool expNotValid = (std::isinf(result) || std::isnan(result));
 	if (expNotValid)
 		PRINT_ENDL("THE RESULT IS EITHER NOT A NUMBER, OR INFINITY");
-	else PRINT_ENDL(part << " represents " << result << "% of " << total << ".");
+	else PRINT(std::format("{0} represents {1:.2f}% of {2}.\n", part, result, total));
 	return result;
 }
 static USHORT reversePercentage() // 4
@@ -348,7 +350,8 @@ static void mainMenu(char defChar) // Main menu
 		if (drawBox)
 		{
 			PRINT_ENDL(strReturn(COL_WIDTH_MENU, MENU_ICON, MENU_ICON, "|", 3, "MAIN MENU", {"1 - Percentage extractor",
-				"2 - Percentage subtractor", "3 - Percentage of total", "4 - Reverse percentage"}));
+				"2 - Percentage subtractor", "3 - Percentage of total", "4 - Reverse percentage", "Coming in the future",
+				"Coming in the future"}));
 			//PRINT(std::setfill(' '));
 			//PRINT_ENDL(std::setw(COL_WIDTH_MENU / 3) << "" << std::left << "* MAIN MENU *");
 			//PRINT_ENDL(std::setfill(defChar) << std::setw(COL_WIDTH_MENU) << ""); // Draw upper boundary.
