@@ -17,6 +17,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+// Contact me:
+// Email: henriqueags994@gmail.com
+// Phone number and WhatsApp: +55 31 971306169
 
 #pragma once
 #include "..\build_dependencies\include\box_drawer.h"
