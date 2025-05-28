@@ -1,3 +1,23 @@
+/*
+Percentage Sandbox v1.0
+An interactive program that performs some operations regarding percentage.
+
+Copyright (C) 2025  Henrique Augusto Gonçalves Soares
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 #include <iostream>
 #include <iomanip>
 #include <format>
@@ -14,6 +34,12 @@ const char MENU_ICON = '=';
 static void mainMenu(char defChar);
 USHORT descPrompt(void (*funcPtr)());
 
+static void about()
+{
+	PRINT_ENDL("Percentage Sandbox v1.0  Copyright (C) 2025  Henrique Augusto Goncalves Soares" << std::endl <<
+		"This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to" << std::endl <<
+		"redistribute it under certain conditions.\n");
+}
 static void closeApp() { PRINT_ENDL(std::endl << "Bye." << std::endl); } // One-line function, because it's small.
 static void getNumInput(float* num) // float input getter with checker for non-float input // CURRENT
 {
@@ -350,7 +376,7 @@ static void mainMenu(char defChar) // Main menu
 		if (drawBox)
 		{
 			PRINT_ENDL(strReturn(COL_WIDTH_MENU, MENU_ICON, MENU_ICON, "|", 3, "MAIN MENU", {"1 - Percentage extractor",
-				"2 - Percentage subtractor", "3 - Percentage of total", "4 - Reverse percentage", "Coming in the future",
+				"2 - Percentage subtractor", "3 - Percentage of total", "4 - Reverse percentage", "5 - ABOUT",
 				"Coming in the future"}));
 			//PRINT(std::setfill(' '));
 			//PRINT_ENDL(std::setw(COL_WIDTH_MENU / 3) << "" << std::left << "* MAIN MENU *");
@@ -387,6 +413,8 @@ static void mainMenu(char defChar) // Main menu
 			percentageOfTotal(); break;
 		case 4:
 			reversePercentage(); break;
+		case 5:
+			about(); break;
 		default:
 			PRINT("Invalid option. Try again." << std::endl); drawBox = false; break;
 		}
