@@ -20,7 +20,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 // Contact me:
 // Email: henriqueags994@gmail.com
-// Phone number and WhatsApp: +55 31 971306169
 
 #pragma once
 #include <iostream>
